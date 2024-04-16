@@ -2,13 +2,14 @@
 
 #include "phanso.h"
 
+int findgcd(int, int);
 
-PhanSo::PhanSo() {
+Phanso::Phanso() {
     tuso = new int(0);
     mauso = new int(1);
 }
 
-PhanSo::PhanSo(int newTuso, int newMauso) {
+Phanso::Phanso(int newTuso, int newMauso) {
     tuso = new int(newTuso);
     if (newMauso == 0) {
         std::cout << "Mau so phai khac 0. Gan mau so hien tai cho 1.\n";
@@ -19,13 +20,13 @@ PhanSo::PhanSo(int newTuso, int newMauso) {
     }
 }
 
-PhanSo::PhanSo(const PhanSo &other) {
+Phanso::Phanso(const Phanso &other) {
 
     tuso = new int(*other.tuso);
     mauso = new int(*other.mauso);
 }
 
-PhanSo &PhanSo::operator=(const PhanSo &ps) {
+Phanso &Phanso::operator=(const Phanso &ps) {
     if (this == &ps) {
         return *this;
     }
@@ -36,8 +37,8 @@ PhanSo &PhanSo::operator=(const PhanSo &ps) {
     return *this;
 }
 
-PhanSo &PhanSo::operator+(const PhanSo &ps) {
-    PhanSo *ketqua;
+Phanso &Phanso::operator+(const Phanso &ps) {
+    Phanso *ketqua;
 
     int newTuso = (*tuso) * (*ps.mauso) + (*mauso) * (*ps.tuso);
     int newMauso = (*mauso) * (*ps.mauso);
@@ -48,8 +49,8 @@ PhanSo &PhanSo::operator+(const PhanSo &ps) {
     return *ketqua;
 }
 
-PhanSo &PhanSo::operator-(const PhanSo &ps) {
-    PhanSo *ketqua;
+Phanso &Phanso::operator-(const Phanso &ps) {
+    Phanso *ketqua;
 
     int newTuso = (*tuso) * (*ps.mauso) - (*mauso) * (*ps.tuso);
     int newMauso = (*mauso) * (*ps.mauso);
@@ -60,8 +61,8 @@ PhanSo &PhanSo::operator-(const PhanSo &ps) {
     return *ketqua;
 }
 
-PhanSo &PhanSo::operator*(const PhanSo &ps) {
-    PhanSo *ketqua;
+Phanso &Phanso::operator*(const Phanso &ps) {
+    Phanso *ketqua;
 
     int newTuso = (*tuso) * (*ps.tuso);
     int newMauso = (*mauso) * (*ps.mauso);
@@ -72,8 +73,8 @@ PhanSo &PhanSo::operator*(const PhanSo &ps) {
     return *ketqua;
 }
 
-PhanSo &PhanSo::operator/(const PhanSo &ps) {
-    PhanSo *ketqua;
+Phanso &Phanso::operator/(const Phanso &ps) {
+    Phanso *ketqua;
 
     int newTuso = (*tuso) * (*ps.mauso);
     int newMauso = (*mauso) * (*ps.tuso);
@@ -85,7 +86,7 @@ PhanSo &PhanSo::operator/(const PhanSo &ps) {
 }
 
 
-PhanSo &PhanSo::operator+=(const PhanSo &ps) {
+Phanso &Phanso::operator+=(const Phanso &ps) {
     int newTuso = (*tuso) * (*ps.mauso) + (*mauso) * (*ps.tuso);
     int newMauso = (*mauso) * (*ps.mauso);
 
@@ -95,7 +96,7 @@ PhanSo &PhanSo::operator+=(const PhanSo &ps) {
     return *this;
 }
 
-PhanSo &PhanSo::operator-=(const PhanSo &ps) {
+Phanso &Phanso::operator-=(const Phanso &ps) {
     int newTuso = (*tuso * *ps.mauso) - (*mauso * *ps.tuso);
     int newMauso = (*mauso) * (*ps.mauso);
 
@@ -105,7 +106,7 @@ PhanSo &PhanSo::operator-=(const PhanSo &ps) {
     return *this;
 }
 
-PhanSo &PhanSo::operator*=(const PhanSo &ps) {
+Phanso &Phanso::operator*=(const Phanso &ps) {
     int newTuso = (*tuso) * (*ps.tuso);
     int newMauso = (*mauso) * (*ps.mauso);
 
@@ -115,7 +116,7 @@ PhanSo &PhanSo::operator*=(const PhanSo &ps) {
     return *this;
 }
 
-PhanSo &PhanSo::operator/=(const PhanSo &ps) {
+Phanso &Phanso::operator/=(const Phanso &ps) {
     int newTuso = (*tuso) * (*ps.mauso);
     int newMauso = (*mauso) * (*ps.tuso);
 
@@ -126,15 +127,115 @@ PhanSo &PhanSo::operator/=(const PhanSo &ps) {
 }
 
 
+bool Phanso::operator==(const Phanso &ps) {
+    Phanso dolech; // The difference between 2 fractions
+    dolech = *this - ps;
+
+    if (*dolech.tuso == 0) {
+        return true;
+    }
+
+    return false;
+}
+
+bool Phanso::operator<(const Phanso &ps) {
+    Phanso dolech;
+
+    dolech = *this - ps;
+
+    if ((*dolech.tuso < 0 && *dolech.mauso > 0) ||
+        (*dolech.tuso > 0 && *dolech.mauso < 0)) {
+
+        return true;
+    }
+
+    return false;
+}
+
+bool Phanso::operator<=(const Phanso &ps) {
+
+    if (*this < ps || *this == ps) {
+        return true;
+    }
+
+    return false;
+}
+
+bool Phanso::operator>(const Phanso &ps) {
+    Phanso dolech;
+
+    dolech = *this - ps;
+
+    if ((*dolech.tuso > 0 && *dolech.mauso > 0) ||
+        (*dolech.tuso < 0 && *dolech.mauso < 0)) {
+
+        return true;
+    }
+
+    return false;
+}
+
+bool Phanso::operator>=(const Phanso &ps) {
+    if (*this > ps || *this == ps) {
+        return true;
+    }
+
+    return false;
+}
 
 
-int findGCD(int a, int b) {
+bool Phanso::operator!=(const Phanso &ps) {
+    if (!(*this == ps)) {
+        return true;
+    }
+
+    return false;
+}
+
+
+Phanso& Phanso::operator++() {
+    *this += Phanso(1,1);
+
+    return *this;
+}
+
+Phanso Phanso::operator++(int x) {
+    Phanso ketqua = *this;
+
+    *this += Phanso(1,1);
+
+    return ketqua;
+}
+
+Phanso& Phanso::operator--() {
+    *this -= Phanso(1,1);
+
+    return *this;
+}
+
+Phanso Phanso::operator--(int x) {
+    Phanso ketqua = *this;
+
+    *this -= Phanso(1,1);
+
+    return ketqua;
+}
+
+int findgcd(int a, int b) {
     if (a == 0) {
         return b;
     }
 
     if (b == 0) {
         return a;
+    }
+
+    if (a < 0) {
+        a = std::abs(a);
+    }
+
+    if (b < 0) {
+        b = std::abs(b);
     }
 
     while (a != b) {
@@ -149,8 +250,8 @@ int findGCD(int a, int b) {
 }
 
 
-std::ostream &operator<<(std::ostream &out, const PhanSo &ps) {
-    int gcd = findGCD(*ps.tuso, *ps.mauso);
+std::ostream &operator<<(std::ostream &out, const Phanso &ps) {
+    int gcd = findgcd(*ps.tuso, *ps.mauso);
 
     if (*ps.tuso == 0) {
         out << 0;
@@ -163,7 +264,7 @@ std::ostream &operator<<(std::ostream &out, const PhanSo &ps) {
     return out;
 }
 
-std::istream &operator>>(std::istream &in, PhanSo &ps) {
+std::istream &operator>>(std::istream &in, Phanso &ps) {
     std::cout << "Nhap tu so: ";
     in >> *ps.tuso;
 
@@ -178,7 +279,7 @@ std::istream &operator>>(std::istream &in, PhanSo &ps) {
     return in;
 }
 
-PhanSo::~PhanSo() {
+Phanso::~Phanso() {
     delete tuso;
     tuso = nullptr;
 

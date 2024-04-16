@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-class PhanSo {
-    friend std::ostream& operator<<(std::ostream&, const PhanSo&);
-    friend std::istream& operator>>(std::istream&, PhanSo&);
+class Phanso {
+    friend std::ostream& operator<<(std::ostream&, const Phanso&);
+    friend std::istream& operator>>(std::istream&, Phanso&);
 
 private:
     int *tuso;
@@ -13,25 +13,38 @@ private:
 
 public:
 
-    PhanSo();
-    explicit PhanSo(int, int);
+    Phanso();
+    explicit Phanso(int, int);
 
-    PhanSo(const PhanSo&);
+    Phanso(const Phanso&);
 
-    PhanSo& operator=(const PhanSo&);
+    Phanso& operator=(const Phanso&);
 
-    PhanSo& operator+(const PhanSo&);
-    PhanSo& operator-(const PhanSo&);
-    PhanSo& operator*(const PhanSo&);
-    PhanSo& operator/(const PhanSo&);
+    Phanso& operator+(const Phanso&);
+    Phanso& operator-(const Phanso&);
+    Phanso& operator*(const Phanso&);
+    Phanso& operator/(const Phanso&);
 
-    PhanSo& operator+=(const PhanSo&);
-    PhanSo& operator-=(const PhanSo&);
-    PhanSo& operator*=(const PhanSo&);
-    PhanSo& operator/=(const PhanSo&);
+    Phanso& operator+=(const Phanso&);
+    Phanso& operator-=(const Phanso&);
+    Phanso& operator*=(const Phanso&);
+    Phanso& operator/=(const Phanso&);
+
+    bool operator==(const Phanso&);
+    bool operator<(const Phanso&);
+    bool operator>(const Phanso&);
+    bool operator<=(const Phanso&);
+    bool operator>=(const Phanso&);
+    bool operator!=(const Phanso&);
+
+    Phanso operator++(int);
+    Phanso &operator++();
+    Phanso operator--(int);
+    Phanso &operator--();
 
 
-    ~PhanSo();
+
+    ~Phanso();
 
 };
 
