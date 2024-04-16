@@ -4,77 +4,184 @@
 
 
 PhanSo::PhanSo() {
-    *tuso = 0;
-    *mauso = 1;
+    tuso = new int(0);
+    mauso = new int(1);
 }
 
-PhanSo::PhanSo(int *newTuso, int *newMauso) {
-    tuso = newTuso;
-    if (*newMauso == 0) {
+PhanSo::PhanSo(int newTuso, int newMauso) {
+    tuso = new int(newTuso);
+    if (newMauso == 0) {
         std::cout << "Mau so phai khac 0. Gan mau so hien tai cho 1.\n";
+
         mauso = new int(1);
     } else {
-        mauso = newMauso;
+        mauso = new int(newMauso);
     }
 }
 
-PhanSo& PhanSo::operator=(const PhanSo *ps) {
-    if (this == ps) {
-        std::cout << "Self-assignment detected. Exit!\n";
+PhanSo::PhanSo(const PhanSo &other) {
+
+    tuso = new int(*other.tuso);
+    mauso = new int(*other.mauso);
+}
+
+PhanSo &PhanSo::operator=(const PhanSo &ps) {
+    if (this == &ps) {
         return *this;
     }
 
-    this->tuso = ps->tuso;
-    this->mauso = ps->mauso;
+    tuso = new int(*ps.tuso);
+    mauso = new int(*ps.mauso);
 
     return *this;
 }
 
-PhanSo* PhanSo::operator+(const PhanSo *ps) {
-    PhanSo *result = new PhanSo(new int(3), new int (4));
+PhanSo &PhanSo::operator+(const PhanSo &ps) {
+    PhanSo *ketqua;
 
-    int tu1 = *this->tuso;
-    int tu2 = *ps->tuso;
-    std::cout << tu1+tu2;
+    int newTuso = (*tuso) * (*ps.mauso) + (*mauso) * (*ps.tuso);
+    int newMauso = (*mauso) * (*ps.mauso);
 
+    ketqua->tuso = new int(newTuso);
+    ketqua->mauso = new int(newMauso);
 
-
-    return result;
-
+    return *ketqua;
 }
 
-int findGCD(const PhanSo *ps) {
-    int tuso = *ps->tuso;
-    int mauso = *ps->mauso;
-    while (tuso != mauso) {
-        if (tuso > mauso) {
-            tuso -= mauso;
+PhanSo &PhanSo::operator-(const PhanSo &ps) {
+    PhanSo *ketqua;
+
+    int newTuso = (*tuso) * (*ps.mauso) - (*mauso) * (*ps.tuso);
+    int newMauso = (*mauso) * (*ps.mauso);
+
+    ketqua->tuso = new int(newTuso);
+    ketqua->mauso = new int(newMauso);
+
+    return *ketqua;
+}
+
+PhanSo &PhanSo::operator*(const PhanSo &ps) {
+    PhanSo *ketqua;
+
+    int newTuso = (*tuso) * (*ps.tuso);
+    int newMauso = (*mauso) * (*ps.mauso);
+
+    ketqua->tuso = new int(newTuso);
+    ketqua->mauso = new int(newMauso);
+
+    return *ketqua;
+}
+
+PhanSo &PhanSo::operator/(const PhanSo &ps) {
+    PhanSo *ketqua;
+
+    int newTuso = (*tuso) * (*ps.mauso);
+    int newMauso = (*mauso) * (*ps.tuso);
+
+    ketqua->tuso = new int(newTuso);
+    ketqua->mauso = new int(newMauso);
+
+    return *ketqua;
+}
+
+
+PhanSo &PhanSo::operator+=(const PhanSo &ps) {
+    int newTuso = (*tuso) * (*ps.mauso) + (*mauso) * (*ps.tuso);
+    int newMauso = (*mauso) * (*ps.mauso);
+
+    tuso = new int(newTuso);
+    mauso = new int(newMauso);
+
+    return *this;
+}
+
+PhanSo &PhanSo::operator-=(const PhanSo &ps) {
+    int newTuso = (*tuso * *ps.mauso) - (*mauso * *ps.tuso);
+    int newMauso = (*mauso) * (*ps.mauso);
+
+    tuso = new int(newTuso);
+    mauso = new int(newMauso);
+
+    return *this;
+}
+
+PhanSo &PhanSo::operator*=(const PhanSo &ps) {
+    int newTuso = (*tuso) * (*ps.tuso);
+    int newMauso = (*mauso) * (*ps.mauso);
+
+    tuso = new int(newTuso);
+    mauso = new int(newMauso);
+
+    return *this;
+}
+
+PhanSo &PhanSo::operator/=(const PhanSo &ps) {
+    int newTuso = (*tuso) * (*ps.mauso);
+    int newMauso = (*mauso) * (*ps.tuso);
+
+    tuso = new int(newTuso);
+    mauso = new int(newMauso);
+
+    return *this;
+}
+
+
+
+
+int findGCD(int a, int b) {
+    if (a == 0) {
+        return b;
+    }
+
+    if (b == 0) {
+        return a;
+    }
+
+    while (a != b) {
+        if (a > b) {
+            a -= b;
         } else {
-            mauso -= tuso;
+            b -= a;
         }
     }
 
-    return tuso;
+    return a;
 }
 
-std::ostream &operator<<(std::ostream &out, const PhanSo *ps) {
-    int gcd = findGCD(ps);
 
-    out << *ps->tuso / gcd << "/" << *ps->mauso / gcd;
+std::ostream &operator<<(std::ostream &out, const PhanSo &ps) {
+    int gcd = findGCD(*ps.tuso, *ps.mauso);
+
+    if (*ps.tuso == 0) {
+        out << 0;
+    } else if (*ps.tuso % *ps.mauso == 0) {
+        out << *ps.tuso / *ps.mauso;
+    } else {
+        out << (*ps.tuso / gcd) << "/" << (*ps.mauso / gcd);
+    }
 
     return out;
 }
 
-std::istream &operator>>(std::istream &in, PhanSo *ps) {
-    std::cout << "Tu so: ";
-    in >> *ps->tuso;
-    std::cout << "Mau so: ";
-    in >> *ps->mauso;
+std::istream &operator>>(std::istream &in, PhanSo &ps) {
+    std::cout << "Nhap tu so: ";
+    in >> *ps.tuso;
+
+    std::cout << "Nhap mau so: ";
+    in >> *ps.mauso;
+
+    if (*ps.mauso == 0) {
+        *ps.mauso = 1;
+        std::cout << "Mau so phai khac 0. Gan mau so hien tai cho 1.\n";
+    }
 
     return in;
 }
 
 PhanSo::~PhanSo() {
     delete tuso;
+    tuso = nullptr;
+
     delete mauso;
+    mauso = nullptr;
 }
