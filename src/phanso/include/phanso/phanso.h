@@ -18,6 +18,10 @@ public:
 
     Phanso(const Phanso&);
 
+    int getTuso();
+
+    int getMauso();
+
     Phanso& operator=(const Phanso&);
 
     Phanso& operator+(const Phanso&);

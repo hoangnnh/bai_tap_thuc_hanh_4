@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "phanso.h"
+#include <phanso/phanso.h>
 
 int findgcd(int, int);
 
@@ -35,6 +35,14 @@ Phanso &Phanso::operator=(const Phanso &ps) {
     mauso = new int(*ps.mauso);
 
     return *this;
+}
+
+int Phanso::getTuso() {
+    return *tuso;
+}
+
+int Phanso::getMauso() {
+    return *mauso;
 }
 
 Phanso &Phanso::operator+(const Phanso &ps) {

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "phanso.h"
+#include <phanso/phanso.h>
 
 using namespace std;
 
